@@ -1,0 +1,24 @@
+{
+  "name": "mdn_demo",
+  "version": "1.0.0",
+  "description": "Nền tảng kiểm thử thực hành và bách khoa toàn thư 94 MDN Web APIs",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:summary": "node test/test-all-apis.js",
+    "test:node": "node --test test/test-each-api.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "happy-dom": "^21.0.3",
+    "vitest": "^5.0.5"
+  }
+}

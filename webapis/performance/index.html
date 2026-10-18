@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Performance API</title>
+  <link rel="stylesheet" href="../shared/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .metrics-dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .metric-pill {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-sm);
+      padding: 10px;
+      text-align: center;
+    }
+    .metric-pill .label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .metric-pill .value {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #38bdf8;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="../shared/api-data.js"></script>
+  <script src="../shared/ui-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

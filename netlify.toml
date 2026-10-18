@@ -1,0 +1,13 @@
+[build]
+  publish = "."
+  command = "node -e \"console.log('Build completed successfully')\""
+
+[[redirects]]
+  from = "/"
+  to = "/client/index.html"
+  status = 302
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"

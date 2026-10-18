@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Media Session API</title>
+  <link rel="stylesheet" href="../shared/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .now-playing-card {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      margin-top: 12px;
+    }
+    .track-artwork-thumb {
+      width: 70px;
+      height: 70px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #38bdf8, #818cf8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+    }
+    .track-details {
+      flex: 1;
+    }
+    .track-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .track-artist {
+      font-size: 0.85rem;
+      color: #38bdf8;
+      margin-top: 2px;
+    }
+    .track-album {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="../shared/api-data.js"></script>
+  <script src="../shared/ui-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

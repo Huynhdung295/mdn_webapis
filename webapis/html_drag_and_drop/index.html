@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML Drag and Drop API</title>
+  <link rel="stylesheet" href="../shared/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .dnd-sandbox {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 12px;
+    }
+    .drag-items-container {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .draggable-card {
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px dashed rgba(56, 189, 248, 0.4);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      cursor: grab;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+    }
+    .draggable-card:active {
+      cursor: grabbing;
+      opacity: 0.6;
+      border-color: #38bdf8;
+    }
+    .drop-zone {
+      border: 2px dashed rgba(255, 255, 255, 0.2);
+      border-radius: var(--radius-sm);
+      padding: 20px;
+      min-height: 160px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: rgba(0, 0, 0, 0.2);
+      transition: all 0.2s ease;
+    }
+    .drop-zone.drag-over {
+      border-color: #34d399;
+      background: rgba(52, 211, 153, 0.1);
+      transform: scale(1.02);
+    }
+    .dropped-list {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .dropped-item {
+      background: rgba(52, 211, 153, 0.15);
+      border: 1px solid rgba(52, 211, 153, 0.3);
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      color: #34d399;
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="../shared/api-data.js"></script>
+  <script src="../shared/ui-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

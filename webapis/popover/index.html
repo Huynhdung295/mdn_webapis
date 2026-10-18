@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Popover API</title>
+  <link rel="stylesheet" href="../shared/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    [popover] {
+      background: #0f172a;
+      color: #f8fafc;
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+      max-width: 400px;
+      margin: auto;
+    }
+    [popover]::backdrop {
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(4px);
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+
+  <!-- Popover Elements in Top Layer -->
+  <div id="demo-popover-auto" popover="auto">
+    <h3 style="color:#38bdf8; margin-bottom:8px;">💡 Popover Tự Động (Auto)</h3>
+    <p style="color:var(--text-muted); font-size:0.85rem; line-height:1.5;">
+      Đây là Popover hiển thị ở <strong>Top Layer</strong> mà không bị che bởi bất kỳ z-index nào. Hỗ trợ tự động đóng khi click ra ngoài (Light Dismiss) hoặc bấm phím Escape!
+    </p>
+    <div style="margin-top:16px; text-align:right;">
+      <button type="button" class="btn btn-secondary" popovertarget="demo-popover-auto" popovertargetaction="hide">Đóng Lại</button>
+    </div>
+  </div>
+
+  <div id="demo-popover-manual" popover="manual">
+    <h3 style="color:#fbbf24; margin-bottom:8px;">⚙ Popover Thủ Công (Manual)</h3>
+    <p style="color:var(--text-muted); font-size:0.85rem; line-height:1.5;">
+      Chế độ manual không tự đóng khi bấm ra ngoài. Phải đóng bằng nút hoặc qua code JavaScript <code>element.hidePopover()</code>.
+    </p>
+    <div style="margin-top:16px; text-align:right;">
+      <button type="button" class="btn btn-danger" popovertarget="demo-popover-manual" popovertargetaction="hide">Đóng Thủ Công</button>
+    </div>
+  </div>
+
+  <script src="../shared/api-data.js"></script>
+  <script src="../shared/ui-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

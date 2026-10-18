@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Audio Session API</title>
+  <link rel="stylesheet" href="../shared/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .session-type-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .type-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-sm);
+      padding: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .type-card:hover {
+      background: rgba(99, 102, 241, 0.1);
+      border-color: rgba(99, 102, 241, 0.3);
+    }
+    .type-card.active {
+      background: rgba(99, 102, 241, 0.2);
+      border-color: var(--accent-primary);
+    }
+    .type-name { font-weight: 700; color: #fff; font-size: 0.9rem; }
+    .type-desc { font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px; line-height: 1.35; }
+  </style>
+</head>
+<body>
+
+  <main class="app-container">
+    <div id="overview-container" class="overview-card"></div>
+
+    <div class="layout-grid">
+      <div class="test-section">
+
+        <!-- Panel 1: Đổi loại phiên -->
+        <div class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">1. Thiết Lập Loại Phiên (AudioSession.type)</h2>
+            <span class="badge badge-info">navigator.audioSession.type</span>
+          </div>
+          <p class="panel-desc">
+            Chọn loại phiên để chỉ định cách âm thanh web phối hợp với các app khác trên hệ điều hành.
+          </p>
+
+          <div class="session-type-grid">
+            <div class="type-card" data-type="auto">
+              <div class="type-name">"auto"</div>
+              <div class="type-desc">Mặc định: trình duyệt tự quyết định theo nội dung phát.</div>
+            </div>
+            <div class="type-card" data-type="ambient">
+              <div class="type-name">"ambient"</div>
+              <div class="type-desc">Âm thanh nền/game. Trộn chung nhạc khác, tắt khi gạt nút im lặng / khoá màn hình.</div>
+            </div>
+            <div class="type-card" data-type="playback">
+              <div class="type-name">"playback"</div>
+              <div class="type-desc">Phát nhạc/podcast/video. Tạm dừng app khác, tiếp tục phát khi khoá màn hình.</div>
+            </div>
+            <div class="type-card" data-type="transient">
+              <div class="type-name">"transient"</div>
+              <div class="type-desc">Âm thông báo ngắn. Tự hạ nhỏ âm lượng app khác tạm thời (ducking).</div>
+            </div>
+            <div class="type-card" data-type="transient-solo">
+              <div class="type-name">"transient-solo"</div>
+              <div class="type-desc">Âm báo thức / chỉ đường. Ngắt hẳn âm thanh khác cho đến khi phát xong.</div>
+            </div>
+          </div>
+
+          <div class="preview-box" id="session-status-display" style="margin-top: 12px;">
+            Đang đọc trạng thái AudioSession...
+          </div>
+        </div>
+
+        <!-- Panel 2: Phát âm thanh & Theo dõi trạng thái -->
+        <div class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">2. Kích Hoạt Âm Thanh & Bắt Sự Kiện statechange</h2>
+            <span class="badge badge-success">onstatechange</span>
+          </div>
+          <p class="panel-desc">
+            Phát âm thanh kiểm tra và theo dõi khi phiên chuyển trạng thái (active, interrupted, inactive).
+          </p>
+
+          <div class="btn-group">
+            <button type="button" id="btn-play-tone" class="btn btn-primary">
+              Bật Sóng Âm 528Hz
+            </button>
+            <button type="button" id="btn-stop-tone" class="btn btn-secondary">
+              Tắt Âm Thanh
+            </button>
+            <button type="button" id="btn-toggle-listen-state" class="btn btn-secondary">
+              Bật Lắng Nghe (statechange)
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Workflow Log UI -->
+      <aside class="logger-card">
+        <div class="logger-header">
+          <div class="logger-title">
+            <span>⚡</span>
+            <span>Workflow Log UI</span>
+          </div>
+          <div class="logger-actions">
+            <button type="button" id="logger-copy" class="logger-btn">Sao chép</button>
+            <button type="button" id="logger-clear" class="logger-btn">Xoá</button>
+          </div>
+        </div>
+        <div id="logger-body" class="logger-body"></div>
+      </aside>
+    </div>
+  </main>
+
+  <script src="../shared/api-data.js"></script>
+  <script src="../shared/ui-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

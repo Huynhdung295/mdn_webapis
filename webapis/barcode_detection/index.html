@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Barcode Detection API</title>
+  <link rel="stylesheet" href="../shared/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .canvas-preview-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-top: 12px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-sm);
+      padding: 14px;
+    }
+    #barcode-canvas {
+      max-width: 100%;
+      background: white;
+      border-radius: 4px;
+    }
+    .formats-chip-list {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+    .format-tag {
+      background: rgba(99, 102, 241, 0.12);
+      border: 1px solid rgba(99, 102, 241, 0.25);
+      color: #a5b4fc;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+    }
+  </style>
+</head>
+<body>
+
+  <main class="app-container">
+    <div id="overview-container" class="overview-card"></div>
+
+    <div class="layout-grid">
+      <div class="test-section">
+
+        <!-- Panel 1: Tra cứu định dạng hỗ trợ -->
+        <div class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">1. Tra Cứu Định Dạng Hỗ Trợ (getSupportedFormats)</h2>
+            <span class="badge badge-info">BarcodeDetector.getSupportedFormats</span>
+          </div>
+          <p class="panel-desc">
+            Truy vấn xem phần cứng thiết bị và hệ điều hành hỗ trợ những loại mã vạch nào (QR Code, EAN-13, Code 128, Data Matrix, v.v.).
+          </p>
+
+          <div class="btn-group">
+            <button type="button" id="btn-get-formats" class="btn btn-primary">
+              Truy Vấn Định Dạng Hỗ Trợ
+            </button>
+          </div>
+
+          <div style="margin-top: 12px;">
+            <div class="form-label">Các định dạng phần cứng có thể đọc:</div>
+            <div id="formats-container" class="formats-chip-list">
+              <span style="color: var(--text-muted); font-size: 0.8rem;">Bấm nút phía trên để tra cứu.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel 2: Quét mã từ Canvas hoặc Ảnh tải lên -->
+        <div class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">2. Nhận Diện & Giải Mã (detector.detect)</h2>
+            <span class="badge badge-success">detector.detect(imageSource)</span>
+          </div>
+          <p class="panel-desc">
+            Vẽ mã mẫu lên Canvas hoặc tải ảnh bất kỳ từ máy tính lên, sau đó dùng <code>detector.detect()</code> để trích xuất nội dung và toạ độ bounding box.
+          </p>
+
+          <div class="btn-group">
+            <button type="button" id="btn-draw-sample-qr" class="btn btn-primary">
+              Vẽ Mã QR Mẫu Lên Canvas
+            </button>
+            <button type="button" id="btn-detect-barcode" class="btn btn-secondary">
+              Nhận Diện Mã (detect())
+            </button>
+            <label class="btn btn-secondary" style="margin: 0; cursor: pointer;">
+              Tải Ảnh Từ Máy Lên...
+              <input type="file" id="file-upload-input" accept="image/*" style="display: none;">
+            </label>
+          </div>
+
+          <div class="canvas-preview-wrap">
+            <canvas id="barcode-canvas" width="280" height="280"></canvas>
+            <div style="font-size: 0.78rem; color: var(--text-muted);">
+              Khung hiển thị hình ảnh quét & khung định vị Bounding Box
+            </div>
+          </div>
+
+          <div id="detection-result-box" class="preview-box" style="margin-top: 10px; font-family: var(--font-mono); font-size: 0.8rem;">
+            Chưa phát hiện mã nào.
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Workflow Log UI -->
+      <aside class="logger-card">
+        <div class="logger-header">
+          <div class="logger-title">
+            <span>⚡</span>
+            <span>Workflow Log UI</span>
+          </div>
+          <div class="logger-actions">
+            <button type="button" id="logger-copy" class="logger-btn">Sao chép</button>
+            <button type="button" id="logger-clear" class="logger-btn">Xoá</button>
+          </div>
+        </div>
+        <div id="logger-body" class="logger-body"></div>
+      </aside>
+    </div>
+  </main>
+
+  <script src="../shared/api-data.js"></script>
+  <script src="../shared/ui-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

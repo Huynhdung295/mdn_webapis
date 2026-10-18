@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gamepad API</title>
+  <link rel="stylesheet" href="../shared/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .gamepad-display {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 12px;
+    }
+    @media (max-width: 640px) {
+      .gamepad-display { grid-template-columns: 1fr; }
+    }
+    .axis-bar-wrap {
+      margin-bottom: 8px;
+    }
+    .axis-bar {
+      height: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 5px;
+      position: relative;
+      overflow: hidden;
+      margin-top: 4px;
+    }
+    .axis-fill {
+      height: 100%;
+      width: 50%;
+      background: #38bdf8;
+      position: absolute;
+      left: 50%;
+      transition: width 0.05s ease, left 0.05s ease;
+    }
+    .buttons-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+    }
+    .btn-indicator {
+      padding: 6px 4px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      font-size: 0.72rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      transition: all 0.1s;
+    }
+    .btn-indicator.pressed {
+      background: rgba(52, 211, 153, 0.25);
+      border-color: #34d399;
+      color: #34d399;
+      font-weight: 700;
+      transform: scale(0.96);
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="../shared/api-data.js"></script>
+  <script src="../shared/ui-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,1305 @@
+/* client/client.css - Giao diện Master Dashboard & Bách Khoa Toàn Thư Web APIs (Senior Dev Craft) */
+:root {
+  --bg-main: #070b14;
+  --bg-surface: #0d1424;
+  --bg-card: #0f192e;
+  --bg-card-hover: #13223f;
+  --border: #1e293b;
+  --border-subtle: rgba(255, 255, 255, 0.07);
+  --border-focus: #38bdf8;
+  --accent: #6366f1;
+  --accent-cyan: #38bdf8;
+  --accent-emerald: #10b981;
+  --text-main: #f8fafc;
+  --text-dim: #94a3b8;
+  --text-muted: #64748b;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Fira Code", monospace;
+}
+
+html {
+  box-sizing: border-box;
+  overflow-x: hidden;
+  scrollbar-gutter: stable;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: #070b14;
+  color: var(--text-main);
+  min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  line-height: 1.5;
+  background-image: radial-gradient(rgba(56, 189, 248, 0.03) 1px, transparent 1px);
+  background-size: 24px 24px;
+  position: relative;
+}
+
+/* =========================================================
+   1. HEADER NAVBAR
+   ========================================================= */
+.dashboard-header {
+  border-bottom: 1px solid var(--border);
+  background: rgba(13, 20, 36, 0.92);
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 12px 28px;
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1440px;
+  margin: 0 auto;
+  gap: 16px;
+}
+
+.logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-badge {
+  background: #0284c7;
+  color: #ffffff;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  font-weight: 800;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+  font-family: var(--font-mono);
+}
+
+.logo-title h1 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: #f8fafc;
+}
+
+.logo-title p {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-run-tests {
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #34d399;
+  border-radius: var(--radius-sm);
+  padding: 5px 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+  font-family: var(--font-mono);
+}
+
+.btn-run-tests:hover {
+  background: #10b981;
+  color: #070b14;
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+}
+
+.current-browser-chip {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 5px 12px;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+}
+
+.current-browser-chip strong {
+  color: #38bdf8;
+}
+
+.lang-toggle {
+  display: inline-flex;
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 2px;
+}
+
+.lang-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.lang-btn.active {
+  background: #0284c7;
+  color: #ffffff;
+}
+
+/* =========================================================
+   2. DASHBOARD CONTAINER & METRICS STRIP
+   ========================================================= */
+.dashboard-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 20px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Developer Metrics Strip */
+.dev-metrics-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 10px 18px;
+  flex-wrap: wrap;
+}
+
+.metric-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--text-dim);
+}
+
+.metric-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot-cyan { background: #38bdf8; box-shadow: 0 0 6px rgba(56, 189, 248, 0.5); }
+.dot-green { background: #34d399; box-shadow: 0 0 6px rgba(52, 211, 153, 0.5); }
+.dot-yellow { background: #fbbf24; box-shadow: 0 0 6px rgba(251, 191, 36, 0.5); }
+.dot-orange { background: #fb923c; box-shadow: 0 0 6px rgba(251, 146, 60, 0.5); }
+.dot-purple { background: #c084fc; box-shadow: 0 0 6px rgba(192, 132, 252, 0.5); }
+.dot-blue { background: #60a5fa; box-shadow: 0 0 6px rgba(96, 165, 250, 0.5); }
+
+.metric-label {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
+.metric-val {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #f8fafc;
+}
+
+/* =========================================================
+   3. VIEW TABS (Web APIs vs Interfaces vs Excluded)
+   ========================================================= */
+.view-mode-tabs {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.view-tab-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  padding: 8px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.view-tab-btn:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-main);
+}
+
+.view-tab-btn.active {
+  background: rgba(56, 189, 248, 0.12);
+  border-color: rgba(56, 189, 248, 0.4);
+  color: #38bdf8;
+}
+
+.view-tab-btn.tab-excluded.active {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #f87171;
+}
+
+/* =========================================================
+   4. FILTER TOOLBAR
+   ========================================================= */
+.filter-toolbar {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.toolbar-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.search-box-wrap {
+  flex: 1;
+  min-width: 260px;
+  position: relative;
+}
+
+.search-input {
+  width: 100%;
+  background: #070b14;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-main);
+  padding: 8px 12px 8px 34px;
+  font-size: 0.88rem;
+  font-family: inherit;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.search-input:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+}
+
+.search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.filter-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 0.04em;
+  font-family: var(--font-mono);
+}
+
+.browser-filters {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.filter-chip {
+  background: #070b14;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-dim);
+  padding: 5px 10px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  user-select: none;
+}
+
+.filter-chip:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-main);
+}
+
+.filter-chip.active {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: #38bdf8;
+  color: #38bdf8;
+}
+
+/* Alphabet Filter Tabs */
+.alphabet-tabs {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.alpha-btn {
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: var(--text-muted);
+  padding: 2px 7px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.alpha-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-main);
+}
+
+.alpha-btn.active {
+  background: #38bdf8;
+  color: #070b14;
+}
+
+/* =========================================================
+   5. CARDS GRID & CANIUSE STYLE CARDS
+   ========================================================= */
+.apis-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr));
+  gap: 16px;
+  width: 100%;
+  max-width: 100%;
+}
+
+.api-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+  transition: all 0.2s ease;
+  position: relative;
+  color: inherit;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  word-break: break-word;
+}
+
+.api-card:hover {
+  border-color: rgba(56, 189, 248, 0.4);
+  background: var(--bg-card-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+.card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.api-card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.2px;
+  line-height: 1.35;
+}
+
+.api-category-tag {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #0284c7;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-family: var(--font-mono);
+}
+
+/* Coverage Score Badges */
+.badge-cov {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.badge-cov-4 {
+  background: rgba(16, 185, 129, 0.12);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.badge-cov-3 {
+  background: rgba(245, 158, 11, 0.12);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.badge-cov-2 {
+  background: rgba(249, 115, 22, 0.12);
+  color: #fb923c;
+  border: 1px solid rgba(249, 115, 22, 0.3);
+}
+
+.badge-cov-1 {
+  background: rgba(239, 68, 68, 0.12);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* CanIUse Style Matrix */
+.caniuse-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  background: #070b14;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  padding: 6px 8px;
+}
+
+.caniuse-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: var(--font-mono);
+}
+
+.b-name {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.b-ver {
+  font-size: 0.74rem;
+  font-weight: 700;
+  margin-top: 1px;
+}
+
+.b-ver.ok { color: #34d399; }
+.b-ver.no { color: #f87171; }
+.b-ver.flag { color: #fbbf24; }
+
+/* Theory Snippets */
+.card-theory-box {
+  background: rgba(15, 23, 42, 0.5);
+  border-left: 2px solid #0284c7;
+  padding: 8px 10px;
+  border-radius: 0 4px 4px 0;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  line-height: 1.45;
+}
+
+/* Core Interface Tags */
+.card-core-tags {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.card-core-tags code {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: #cbd5e1;
+}
+
+/* Card Actions */
+.card-bottom-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  gap: 8px;
+}
+
+.live-support-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.74rem;
+  font-weight: 600;
+}
+
+.live-support-indicator.yes { color: #34d399; }
+.live-support-indicator.no { color: #f87171; }
+
+.card-action-btns {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-open-encyclopedia {
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: 4px;
+  color: #38bdf8;
+  font-size: 0.76rem;
+  font-weight: 600;
+  padding: 4px 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-open-encyclopedia:hover {
+  background: #38bdf8;
+  color: #070b14;
+}
+
+.btn-open-lab {
+  background: #0284c7;
+  border: 1px solid #0284c7;
+  border-radius: 4px;
+  color: #ffffff;
+  font-size: 0.76rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.15s;
+}
+
+.btn-open-lab:hover {
+  background: #0369a1;
+}
+
+/* =========================================================
+   6. INTERFACE & EXCLUDED CARDS
+   ========================================================= */
+.interface-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  transition: all 0.2s ease;
+}
+
+.interface-card:hover {
+  border-color: rgba(56, 189, 248, 0.4);
+  background: var(--bg-card-hover);
+}
+
+.interface-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.interface-code-name {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #38bdf8;
+}
+
+.interface-badges-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.status-chip {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+}
+
+.status-chip.standard { background: rgba(16, 185, 129, 0.12); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.25); }
+.status-chip.experimental { background: rgba(245, 158, 11, 0.12); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.25); }
+.status-chip.nonstandard { background: rgba(168, 85, 247, 0.12); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.25); }
+.status-chip.deprecated { background: rgba(239, 68, 68, 0.12); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.25); }
+
+.interface-parent-tag {
+  font-size: 0.72rem;
+  color: #94a3b8;
+  font-family: var(--font-mono);
+}
+
+/* =========================================================
+   7. ENCYCLOPEDIA MODAL (BÁCH KHOA TOÀN THƯ)
+   ========================================================= */
+body.modal-open {
+  overflow: hidden !important;
+  touch-action: none;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.modal-backdrop.hidden {
+  display: none !important;
+}
+
+.modal-dialog {
+  background: #090e1a;
+  border: 1px solid #334155;
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 960px;
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.modal-header {
+  padding: 16px 20px;
+  background: #0d1527;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  flex-shrink: 0;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.modal-title-wrap {
+  min-width: 0;
+  max-width: calc(100% - 44px);
+  flex: 1;
+  overflow: hidden;
+  word-break: break-word;
+}
+
+.modal-category-tag {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #38bdf8;
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+}
+
+.modal-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-top: 2px;
+  word-break: break-word;
+}
+
+.modal-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.modal-meta-row .badge-cov {
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.35;
+}
+
+.modal-close-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+
+.modal-close-btn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+.modal-body {
+  padding: 20px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Encyclopedia Content Sections */
+.encyclo-section-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #f8fafc;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding-bottom: 8px;
+  margin-bottom: 10px;
+}
+
+.encyclo-table-wrap {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: #050811;
+  box-sizing: border-box;
+  margin-top: 8px;
+}
+
+.encyclo-table {
+  width: 100%;
+  min-width: 520px;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+.encyclo-table th {
+  background: rgba(255, 255, 255, 0.04);
+  text-align: left;
+  padding: 9px 12px;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.encyclo-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  vertical-align: top;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.encyclo-table code {
+  font-family: var(--font-mono);
+  color: #38bdf8;
+  font-size: 0.8rem;
+  word-break: break-all;
+  overflow-wrap: anywhere;
+  display: inline-block;
+}
+
+.encyclo-pros-cons-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.encyclo-cta-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 20px;
+  gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.type-tag {
+  font-family: var(--font-mono);
+  color: #fbbf24;
+  font-size: 0.75rem;
+}
+
+.code-snippet-box {
+  background: #050811;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  position: relative;
+  overflow-x: auto;
+}
+
+.code-snippet-box pre {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: #e2e8f0;
+  line-height: 1.5;
+}
+
+.btn-copy-code {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--text-dim);
+  font-size: 0.72rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-copy-code:hover {
+  background: #0284c7;
+  color: white;
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px 20px;
+  background: var(--bg-card);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-dim);
+}
+
+/* =========================================================
+   8. MOBILE BOTTOM NAVIGATION BAR & RESPONSIVE DESIGN
+   ========================================================= */
+.mobile-bottom-nav {
+  display: none; /* Ẩn trên máy tính để bàn (Desktop) */
+}
+
+/* Tablet & Mobile Screens */
+@media (max-width: 1024px) {
+  .dashboard-header {
+    padding: 10px 18px;
+  }
+  .dashboard-container {
+    padding: 16px 18px;
+  }
+  .dev-metrics-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .apis-grid {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+  }
+}
+
+/* Mobile Screens (<= 768px) */
+@media (max-width: 768px) {
+  /* 1. Mobile Bottom Navigation Bar */
+  .mobile-bottom-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 990;
+    background: rgba(10, 15, 29, 0.96);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(56, 189, 248, 0.25);
+    box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.65);
+    padding: 6px 4px calc(6px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .bottom-nav-item {
+    flex: 1;
+    background: transparent;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    color: #94a3b8;
+    cursor: pointer;
+    padding: 5px 2px;
+    border-radius: 8px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    user-select: none;
+    position: relative;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .bottom-nav-item .nav-icon {
+    font-size: 1.25rem;
+    line-height: 1;
+    transition: transform 0.2s ease;
+  }
+
+  .bottom-nav-item .nav-label {
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+
+  .bottom-nav-item:active .nav-icon {
+    transform: scale(0.85);
+  }
+
+  .bottom-nav-item.active {
+    color: #38bdf8;
+  }
+
+  .bottom-nav-item.active .nav-icon {
+    transform: translateY(-1px);
+    filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.6));
+  }
+
+  .bottom-nav-item.active::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 26px;
+    height: 3px;
+    background: #38bdf8;
+    border-radius: 999px;
+    box-shadow: 0 0 10px #38bdf8;
+  }
+
+  /* 2. Container Padding - Tránh bị Bottom Nav che khuất */
+  .dashboard-container {
+    padding: 12px 14px calc(80px + env(safe-area-inset-bottom, 0px)) 14px !important;
+    gap: 14px;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* 3. Header tinh gọn tối đa cho điện thoại */
+  .dashboard-header {
+    padding: 8px 12px;
+  }
+
+  .header-top {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .logo-wrap {
+    gap: 8px;
+  }
+
+  .logo-badge {
+    font-size: 0.85rem;
+    padding: 3px 6px;
+  }
+
+  .logo-title h1 {
+    font-size: 0.95rem;
+    white-space: nowrap;
+  }
+
+  .logo-title p {
+    display: none; /* Ẩn subtitle trên màn hình nhỏ */
+  }
+
+  /* Ẩn các nút rườm rà ở header trên mobile (đã chuyển xuống Bottom Nav) */
+  .btn-run-tests {
+    display: none !important;
+  }
+
+  .current-browser-chip {
+    display: none !important;
+  }
+
+  /* 4. Tab Modes thành thanh cuộn ngang mượt mà */
+  .view-mode-tabs {
+    display: flex;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 6px;
+    padding-bottom: 2px;
+  }
+  .view-mode-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .view-tab-btn {
+    white-space: nowrap;
+    font-size: 0.76rem;
+    padding: 6px 10px;
+    flex-shrink: 0;
+  }
+
+  /* 5. Metrics Strip xếp dạng lưới 2 cột */
+  .dev-metrics-strip {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 10px;
+  }
+
+  .metric-item {
+    font-size: 0.75rem;
+    gap: 6px;
+  }
+
+  .metric-val {
+    font-size: 0.82rem;
+  }
+
+  /* 6. Filter Toolbar & Search Box */
+  .filter-toolbar {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .toolbar-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .search-box-wrap {
+    min-width: 100% !important;
+    width: 100%;
+  }
+
+  .search-input {
+    font-size: 0.82rem;
+    padding: 8px 10px 8px 32px;
+  }
+
+  .browser-filters {
+    display: flex;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+    gap: 5px;
+    width: 100%;
+  }
+  .browser-filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filter-label {
+    white-space: nowrap;
+    flex-shrink: 0;
+    align-self: center;
+  }
+
+  .filter-chip {
+    white-space: nowrap;
+    flex-shrink: 0;
+    font-size: 0.72rem;
+    padding: 4px 8px;
+  }
+
+  /* 7. Alphabet Tabs vuốt ngang chạm êm */
+  .alphabet-tabs {
+    display: flex;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 4px;
+    padding-top: 6px;
+    padding-bottom: 2px;
+  }
+  .alphabet-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .alpha-btn {
+    flex-shrink: 0;
+    padding: 3px 8px;
+    font-size: 0.72rem;
+  }
+
+  /* 8. Danh sách thẻ API chỉ 1 cột trên điện thoại */
+  .apis-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .api-card {
+    padding: 14px;
+    gap: 10px;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .api-card-title {
+    font-size: 0.98rem;
+  }
+
+  .card-top {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .caniuse-strip {
+    padding: 5px 6px;
+    gap: 4px;
+  }
+
+  .card-bottom-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .card-action-btns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .btn-open-encyclopedia, .btn-open-lab {
+    justify-content: center;
+    padding: 8px 10px;
+    font-size: 0.8rem;
+    text-align: center;
+  }
+
+  /* 9. Modal Bách Khoa Toàn Thư tối ưu vuốt cuộn màn hình dọc */
+  .modal-backdrop {
+    padding: 0 !important;
+    align-items: flex-end !important;
+    overflow-x: hidden !important;
+  }
+
+  .modal-dialog {
+    max-height: 92vh !important;
+    height: 92vh !important;
+    max-width: 100vw !important;
+    width: 100vw !important;
+    border-radius: 18px 18px 0 0 !important;
+    border-bottom: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    margin: 0 !important;
+    overflow-x: hidden !important;
+  }
+
+  .modal-header {
+    padding: 12px 16px !important;
+  }
+
+  .modal-title {
+    font-size: 1.15rem !important;
+  }
+
+  .modal-body {
+    padding: 14px 14px 60px 14px !important;
+    gap: 16px !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .encyclo-pros-cons-grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  .encyclo-cta-box {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    text-align: left !important;
+    gap: 12px !important;
+    padding: 12px !important;
+  }
+
+  .encyclo-cta-box .btn-open-lab {
+    width: 100% !important;
+    justify-content: center !important;
+    text-align: center !important;
+  }
+}

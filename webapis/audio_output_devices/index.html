@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Audio Output Devices API</title>
+  <link rel="stylesheet" href="../shared/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .device-list-box {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-sm);
+      padding: 10px;
+      max-height: 200px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .device-item {
+      padding: 8px 10px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .sound-generator-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 10px;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: var(--radius-sm);
+    }
+  </style>
+</head>
+<body>
+
+  <main class="app-container">
+    <div id="overview-container" class="overview-card"></div>
+
+    <div class="layout-grid">
+      <div class="test-section">
+
+        <!-- Panel 1: Liệt kê & Chọn thiết bị -->
+        <div class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">1. Quét & Lựa Chọn Thiết Bị Loa</h2>
+            <span class="badge badge-info">enumerateDevices & selectAudioOutput</span>
+          </div>
+          <p class="panel-desc">
+            Khám phá danh sách phần cứng đầu ra và mở hộp thoại chọn thiết bị do người dùng uỷ quyền.
+          </p>
+
+          <div class="btn-group">
+            <button type="button" id="btn-enumerate-devices" class="btn btn-primary">
+              Quét Loa/Tai Nghe (enumerateDevices)
+            </button>
+            <button type="button" id="btn-select-audio-output" class="btn btn-secondary">
+              Hộp Thoại Chọn Loa (selectAudioOutput)
+            </button>
+            <button type="button" id="btn-listen-device-change" class="btn btn-secondary">
+              Theo Dõi Cắm/Rút (devicechange)
+            </button>
+          </div>
+
+          <div style="margin-top: 12px;">
+            <div class="form-label">Danh sách thiết bị tìm thấy:</div>
+            <div id="devices-container" class="device-list-box">
+              <span style="color: var(--text-muted); font-size: 0.8rem;">Chưa quét. Bấm nút phía trên để bắt đầu.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel 2: Định tuyến HTMLMediaElement -->
+        <div class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">2. Gán Đầu Ra Cho &lt;audio&gt; (setSinkId)</h2>
+            <span class="badge badge-success">setSinkId(deviceId)</span>
+          </div>
+          <p class="panel-desc">
+            Đổi thiết bị phát cho thẻ audio trực tiếp trong lúc đang phát hoặc trước khi phát.
+          </p>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="select-target-device">Thiết bị muốn gán:</label>
+              <select id="select-target-device" class="form-select">
+                <option value="">(Mặc định hệ thống - Default)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">sinkId hiện hành:</label>
+              <input type="text" id="input-current-sink-id" class="form-input" readonly value='""'>
+            </div>
+          </div>
+
+          <div class="sound-generator-bar">
+            <audio id="demo-audio-player" controls preload="auto" style="flex: 1;"></audio>
+            <button type="button" id="btn-generate-tone-audio" class="btn btn-primary">
+              Phát Thử
+            </button>
+          </div>
+
+          <div class="btn-group" style="margin-top: 10px;">
+            <button type="button" id="btn-apply-sink-id" class="btn btn-secondary">
+              Áp Dụng setSinkId()
+            </button>
+            <button type="button" id="btn-test-invalid-sink" class="btn btn-danger">
+              Bẫy Lỗi sinkId Không Tồn Tại
+            </button>
+          </div>
+        </div>
+
+        <!-- Panel 3: Định tuyến Web Audio API -->
+        <div class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">3. Định Tuyến Web Audio API (AudioContext.setSinkId)</h2>
+            <span class="badge badge-info">AudioContext.setSinkId</span>
+          </div>
+          <p class="panel-desc">
+            Định tuyến luồng âm thanh tổng hợp từ Web Audio graph sang thiết bị đầu ra riêng biệt.
+          </p>
+
+          <div class="btn-group">
+            <button type="button" id="btn-play-webaudio-tone" class="btn btn-primary">
+              Bật Sóng Synth 440Hz
+            </button>
+            <button type="button" id="btn-stop-webaudio-tone" class="btn btn-secondary">
+              Tắt Sóng Synth
+            </button>
+            <button type="button" id="btn-apply-webaudio-sink" class="btn btn-secondary">
+              Chuyển AudioContext Sang Loa Đã Chọn
+            </button>
+          </div>
+
+          <div class="preview-box" id="webaudio-status-box" style="margin-top:10px;">
+            Trạng thái AudioContext: <strong>Chưa chạy</strong>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Workflow Log UI -->
+      <aside class="logger-card">
+        <div class="logger-header">
+          <div class="logger-title">
+            <span>⚡</span>
+            <span>Workflow Log UI</span>
+          </div>
+          <div class="logger-actions">
+            <button type="button" id="logger-copy" class="logger-btn">Sao chép</button>
+            <button type="button" id="logger-clear" class="logger-btn">Xoá</button>
+          </div>
+        </div>
+        <div id="logger-body" class="logger-body"></div>
+      </aside>
+    </div>
+  </main>
+
+  <script src="../shared/api-data.js"></script>
+  <script src="../shared/ui-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

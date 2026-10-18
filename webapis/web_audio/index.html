@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Audio API</title>
+  <link rel="stylesheet" href="../shared/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .audio-visualizer-canvas {
+      width: 100%;
+      height: 140px;
+      background: #020617;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+    .piano-keys {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      margin-top: 10px;
+    }
+    .piano-key {
+      flex: 1;
+      height: 70px;
+      background: #1e293b;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+      color: #f8fafc;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.08s;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 8px;
+    }
+    .piano-key:active {
+      background: #38bdf8;
+      color: #020617;
+      transform: translateY(2px);
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="../shared/api-data.js"></script>
+  <script src="../shared/ui-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

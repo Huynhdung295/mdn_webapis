@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MDN Web APIs Interactive Lab & Test Suite</title>
+  <meta name="description" content="Nền tảng kiểm thử thực hành và làm chủ toàn diện các Web APIs theo tiêu chuẩn MDN Web Docs">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="alternate icon" href="/favicon.ico">
+  <link rel="stylesheet" href="client.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Header Dashboard -->
+  <header class="dashboard-header">
+    <div class="header-top">
+      <div class="logo-wrap">
+        <div class="logo-badge">MDN</div>
+        <div class="logo-title">
+          <h1 data-client-i18n="title">Phòng Thí Nghiệm MDN Web APIs</h1>
+          <p data-client-i18n="subtitle">Bộ sưu tập kiểm thử thực hành toàn diện các Web APIs theo tiêu chuẩn MDN</p>
+        </div>
+      </div>
+
+      <div class="header-controls">
+        <button type="button" id="btn-run-all-tests" class="btn-run-tests" title="Chạy kiểm thử tự động toàn diện 94 Labs">
+          <span>🧪</span>
+          <span>Chạy Test Toàn Bộ Labs</span>
+        </button>
+
+        <div id="current-browser-info" class="current-browser-chip">
+          Đang nhận diện trình duyệt...
+        </div>
+
+        <div class="lang-toggle">
+          <button type="button" class="lang-btn active" data-lang="vi">VI</button>
+          <button type="button" class="lang-btn" data-lang="en">EN</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="dashboard-container">
+
+    <!-- Compact Developer Metrics Strip -->
+    <section class="dev-metrics-strip">
+      <div class="metric-item">
+        <span class="metric-dot dot-cyan"></span>
+        <span class="metric-label">Tổng Web APIs:</span>
+        <strong id="stat-total-num" class="metric-val">94</strong>
+      </div>
+      <div class="metric-item" title="Hỗ trợ đầy đủ cả Chrome, Edge, Firefox và Safari">
+        <span class="metric-dot dot-green"></span>
+        <span class="metric-label">Phổ Cập 4/4 (Baseline):</span>
+        <strong id="stat-baseline-num" class="metric-val" style="color:#34d399;">64</strong>
+      </div>
+      <div class="metric-item" title="Hỗ trợ 3 trong 4 trình duyệt lớn">
+        <span class="metric-dot dot-yellow"></span>
+        <span class="metric-label">Độ Phủ 3/4:</span>
+        <strong id="stat-cov3-num" class="metric-val" style="color:#fbbf24;">9</strong>
+      </div>
+      <div class="metric-item" title="Chỉ hỗ trợ hệ sinh thái Chromium (Chrome & Edge)">
+        <span class="metric-dot dot-orange"></span>
+        <span class="metric-label">Chromium 2/4:</span>
+        <strong id="stat-cov2-num" class="metric-val" style="color:#fb923c;">21</strong>
+      </div>
+      <div class="metric-item">
+        <span class="metric-dot dot-purple"></span>
+        <span class="metric-label">Interfaces MDN:</span>
+        <strong id="stat-interfaces-num" class="metric-val" style="color:#c084fc;">987+</strong>
+      </div>
+      <div class="metric-item">
+        <span class="metric-dot dot-blue"></span>
+        <span class="metric-label">Tương Thích Máy Này:</span>
+        <strong id="stat-rate-num" class="metric-val" style="color:#38bdf8;">96%</strong>
+      </div>
+    </section>
+
+    <!-- View Mode Switcher -->
+    <div class="view-mode-tabs">
+      <button type="button" id="tab-mode-apis" class="view-tab-btn active">🌐 Danh Mục 94 Web APIs Lớn</button>
+      <button type="button" id="tab-mode-interfaces" class="view-tab-btn">🧩 Tra Cứu 987 Interfaces MDN</button>
+      <button type="button" id="tab-mode-excluded" class="view-tab-btn tab-excluded">🚫 62 Interfaces Bị Gỡ Bỏ (MDN Flagged)</button>
+    </div>
+
+    <!-- Filter & Search Toolbar -->
+    <section class="filter-toolbar">
+      <!-- Search Box & Browser Matrix Filter -->
+      <div class="toolbar-row">
+        <div class="search-box-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search-input" class="search-input" placeholder="Tìm kiếm API theo tên, props, methods, hoặc ứng dụng thực tế...">
+        </div>
+
+        <!-- Coverage Filter (Nên dùng hay không) -->
+        <div class="browser-filters">
+          <span class="filter-label">ĐỘ PHỦ TRÌNH DUYỆT:</span>
+          <button type="button" class="filter-chip filter-cov-btn active" data-cov="all">Tất cả</button>
+          <button type="button" class="filter-chip filter-cov-btn" data-cov="4" title="100% an tâm dùng cho Production">🟢 4/4 Baseline (64)</button>
+          <button type="button" class="filter-chip filter-cov-btn" data-cov="3" title="Hỗ trợ 3/4 trình duyệt lớn">🟡 3/4 Trình duyệt (9)</button>
+          <button type="button" class="filter-chip filter-cov-btn" data-cov="2" title="Chỉ chạy trên Chrome & Edge">🟠 Chromium 2/4 (21)</button>
+        </div>
+
+        <!-- Trình duyệt cụ thể -->
+        <div class="browser-filters">
+          <span class="filter-label">TRÌNH DUYỆT:</span>
+          <button type="button" class="filter-chip filter-browser-btn active" data-filter="all">Tất cả</button>
+          <button type="button" class="filter-chip filter-browser-btn" data-filter="chrome">Chrome</button>
+          <button type="button" class="filter-chip filter-browser-btn" data-filter="edge">Edge</button>
+          <button type="button" class="filter-chip filter-browser-btn" data-filter="firefox">Firefox</button>
+          <button type="button" class="filter-chip filter-browser-btn" data-filter="safari">Safari</button>
+        </div>
+
+        <!-- Live Device Filter -->
+        <div class="browser-filters">
+          <span class="filter-label">MÁY BẠN:</span>
+          <button type="button" class="filter-chip filter-live-btn active" data-live="all">Tất cả</button>
+          <button type="button" class="filter-chip filter-live-btn" data-live="yes">🟢 Hỗ trợ</button>
+          <button type="button" class="filter-chip filter-live-btn" data-live="no">🔴 Chưa hỗ trợ</button>
+        </div>
+      </div>
+
+      <!-- Alphabet Letter Tabs (A-Z) -->
+      <div class="alphabet-tabs">
+        <span class="filter-label" style="margin-right:4px;">NHÓM A-Z:</span>
+        <button type="button" class="alpha-btn active" data-group="all">TẤT CẢ</button>
+        <button type="button" class="alpha-btn" data-group="A">A</button>
+        <button type="button" class="alpha-btn" data-group="B">B</button>
+        <button type="button" class="alpha-btn" data-group="C">C</button>
+        <button type="button" class="alpha-btn" data-group="D">D</button>
+        <button type="button" class="alpha-btn" data-group="E">E</button>
+        <button type="button" class="alpha-btn" data-group="F">F</button>
+        <button type="button" class="alpha-btn" data-group="G">G</button>
+        <button type="button" class="alpha-btn" data-group="H">H</button>
+        <button type="button" class="alpha-btn" data-group="I">I</button>
+        <button type="button" class="alpha-btn" data-group="J">J</button>
+        <button type="button" class="alpha-btn" data-group="K">K</button>
+        <button type="button" class="alpha-btn" data-group="L">L</button>
+        <button type="button" class="alpha-btn" data-group="M">M</button>
+        <button type="button" class="alpha-btn" data-group="N">N</button>
+        <button type="button" class="alpha-btn" data-group="O">O</button>
+        <button type="button" class="alpha-btn" data-group="P">P</button>
+        <button type="button" class="alpha-btn" data-group="R">R</button>
+        <button type="button" class="alpha-btn" data-group="S">S</button>
+        <button type="button" class="alpha-btn" data-group="T">T</button>
+        <button type="button" class="alpha-btn" data-group="U">U</button>
+        <button type="button" class="alpha-btn" data-group="V">V</button>
+        <button type="button" class="alpha-btn" data-group="W">W</button>
+        <button type="button" class="alpha-btn" data-group="X">X</button>
+      </div>
+    </section>
+
+    <!-- API Cards Grid List -->
+    <section id="apis-grid" class="apis-grid">
+      <!-- Sẽ được client.js render tự động -->
+    </section>
+
+  </main>
+
+  <!-- Encyclopedia Drawer Modal -->
+  <div id="encyclopedia-modal" class="modal-backdrop hidden">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span id="modal-api-category" class="modal-category-tag">Category</span>
+          <h2 id="modal-api-name" class="modal-title">API Name</h2>
+          <div id="modal-api-meta" class="modal-meta-row"></div>
+        </div>
+        <button type="button" id="modal-close-btn" class="modal-close-btn" title="Đóng [Esc]">✕</button>
+      </div>
+      <div class="modal-body" id="modal-body-content">
+        <!-- Rendered by client.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Bottom Navigation Bar (Dành riêng cho Điện Thoại & Tablet) -->
+  <nav class="mobile-bottom-nav" id="mobile-bottom-nav" aria-label="Mobile Navigation">
+    <button type="button" class="bottom-nav-item active" id="mob-nav-apis" data-tab="apis" title="94 Web APIs Lớn">
+      <span class="nav-icon">🌐</span>
+      <span class="nav-label">Web APIs</span>
+    </button>
+    <button type="button" class="bottom-nav-item" id="mob-nav-interfaces" data-tab="interfaces" title="987 Interfaces MDN">
+      <span class="nav-icon">🧩</span>
+      <span class="nav-label">Interfaces</span>
+    </button>
+    <button type="button" class="bottom-nav-item" id="mob-nav-search" title="Tìm kiếm & Bộ lọc nhanh">
+      <span class="nav-icon">🔍</span>
+      <span class="nav-label">Tìm &amp; Lọc</span>
+    </button>
+    <button type="button" class="bottom-nav-item" id="mob-nav-encyclopedia" title="Mở Bách Khoa Toàn Thư">
+      <span class="nav-icon">📖</span>
+      <span class="nav-label">Bách Khoa</span>
+    </button>
+    <button type="button" class="bottom-nav-item" id="mob-nav-tests" title="Chạy kiểm thử toàn diện">
+      <span class="nav-icon">🧪</span>
+      <span class="nav-label">Chạy Test</span>
+    </button>
+  </nav>
+
+  <!-- Central API Registry, Encyclopedia & Dashboard Scripts -->
+  <script src="../webapis/shared/api-data.js"></script>
+  <script src="../webapis/shared/interfaces-data.js"></script>
+  <script src="../webapis/shared/excluded-data.js"></script>
+  <script src="../webapis/shared/api-encyclopedia.js"></script>
+  <script src="client.js"></script>
+</body>
+</html>

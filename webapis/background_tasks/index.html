@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Background Tasks API</title>
+  <link rel="stylesheet" href="../shared/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .fps-anim-box {
+      width: 100%;
+      height: 40px;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-sm);
+      position: relative;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+    .anim-runner {
+      position: absolute;
+      top: 6px;
+      left: 0;
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary));
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--accent-secondary);
+      animation: runnerSlide 1.8s linear infinite alternate;
+    }
+    @keyframes runnerSlide {
+      from { left: 4px; }
+      to { left: calc(100% - 32px); }
+    }
+    .progress-bar {
+      width: 100%;
+      height: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 5px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #10b981, #06b6d4);
+      transition: width 0.1s;
+    }
+  </style>
+</head>
+<body>
+
+  <main class="app-container">
+    <div id="overview-container" class="overview-card"></div>
+
+    <div class="layout-grid">
+      <div class="test-section">
+
+        <!-- Panel 1: Thử nghiệm Blocking vs Idle -->
+        <div class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">1. So Sánh: Làm Đơ UI vs requestIdleCallback</h2>
+            <span class="badge badge-success">requestIdleCallback</span>
+          </div>
+          <p class="panel-desc">
+            Quan sát quả cầu animation bên dưới. Chạy đồng bộ sẽ làm quả cầu đứng hình lập tức; chạy qua <code>requestIdleCallback</code> giữ vững 60fps.
+          </p>
+
+          <div class="fps-anim-box">
+            <div class="anim-runner"></div>
+          </div>
+
+          <div class="form-row" style="margin-top: 12px;">
+            <div class="form-group">
+              <label class="form-label">Số lượng tác vụ (Tasks):</label>
+              <input type="number" id="num-tasks-input" class="form-input" value="1000" min="100" max="10000">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Độ phức tạp vòng lặp:</label>
+              <input type="number" id="task-difficulty-input" class="form-input" value="2000" min="500" max="20000">
+            </div>
+          </div>
+
+          <div class="btn-group">
+            <button type="button" id="btn-run-blocking" class="btn btn-danger">
+              Chạy Đồng Bộ (Khựng UI)
+            </button>
+            <button type="button" id="btn-run-idle-tasks" class="btn btn-primary">
+              Chạy requestIdleCallback (Mượt)
+            </button>
+          </div>
+
+          <div class="progress-bar">
+            <div id="idle-progress-fill" class="progress-fill"></div>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--text-muted); margin-top: 4px;">
+            <span id="idle-tasks-count-label">Đã xử lý: 0 / 1000</span>
+            <span id="idle-time-remaining-label">timeRemaining(): -- ms</span>
+          </div>
+        </div>
+
+        <!-- Panel 2: Timeout & Huỷ tác vụ -->
+        <div class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">2. Lập Lịch Timeout & Huỷ (cancelIdleCallback)</h2>
+            <span class="badge badge-warning">cancelIdleCallback</span>
+          </div>
+          <p class="panel-desc">
+            Đặt <code>{ timeout: 2000 }</code> để cưỡng chế thực thi nếu trình duyệt bận quá 2 giây.
+          </p>
+
+          <div class="btn-group">
+            <button type="button" id="btn-schedule-timeout" class="btn btn-secondary">
+              Lập Lịch với Timeout 2000ms
+            </button>
+            <button type="button" id="btn-cancel-task" class="btn btn-danger">
+              Huỷ Tác Vụ (cancelIdleCallback)
+            </button>
+          </div>
+
+          <div id="timeout-result-box" class="preview-box" style="margin-top:10px; font-family: var(--font-mono); font-size: 0.8rem;">
+            Chưa có tác vụ nào được lên lịch.
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Workflow Log UI -->
+      <aside class="logger-card">
+        <div class="logger-header">
+          <div class="logger-title">
+            <span>⚡</span>
+            <span>Workflow Log UI</span>
+          </div>
+          <div class="logger-actions">
+            <button type="button" id="logger-copy" class="logger-btn">Sao chép</button>
+            <button type="button" id="logger-clear" class="logger-btn">Xoá</button>
+          </div>
+        </div>
+        <div id="logger-body" class="logger-body"></div>
+      </aside>
+    </div>
+  </main>
+
+  <script src="../shared/api-data.js"></script>
+  <script src="../shared/ui-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Badging API</title>
+  <link rel="stylesheet" href="../shared/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .pwa-dock-simulator {
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .app-icon-wrap {
+      width: 72px;
+      height: 72px;
+      background: linear-gradient(135deg, #6366f1, #06b6d4);
+      border-radius: 18px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    }
+    .app-icon-inner {
+      font-size: 2rem;
+      color: white;
+      font-weight: 800;
+    }
+    .simulated-badge {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background: #ef4444;
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      border-radius: 9999px;
+      padding: 2px 7px;
+      border: 2px solid #080c16;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+      display: none;
+      min-width: 20px;
+      text-align: center;
+    }
+    .simulated-badge.dot-only {
+      width: 14px;
+      height: 14px;
+      min-width: unset;
+      padding: 0;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+
+  <main class="app-container">
+    <div id="overview-container" class="overview-card"></div>
+
+    <div class="layout-grid">
+      <div class="test-section">
+
+        <!-- Panel 1: Thao tác Badge trên OS -->
+        <div class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">1. Điều Khiển Huy Hiệu Ứng Dụng (navigator.setAppBadge)</h2>
+            <span class="badge badge-success">setAppBadge / clearAppBadge</span>
+          </div>
+          <p class="panel-desc">
+            Đặt số thông báo hoặc hiển thị chấm đỏ trên biểu tượng icon ứng dụng tại Taskbar (Windows) hoặc Dock (macOS).
+          </p>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Số đếm thông báo (Count):</label>
+              <input type="number" id="badge-count-input" class="form-input" value="3" min="1" max="999">
+            </div>
+          </div>
+
+          <div class="btn-group">
+            <button type="button" id="btn-set-numeric-badge" class="btn btn-primary">
+              Gán Số Đếm (setAppBadge(n))
+            </button>
+            <button type="button" id="btn-set-dot-badge" class="btn btn-secondary">
+              Gán Chấm Đỏ (setAppBadge())
+            </button>
+            <button type="button" id="btn-clear-badge" class="btn btn-danger">
+              Xoá Huy Hiệu (clearAppBadge())
+            </button>
+          </div>
+        </div>
+
+        <!-- Panel 2: Mô phỏng Icon PWA trên hệ điều hành -->
+        <div class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">2. Trực Quan Hoá Biểu Tượng Icon Trên Hệ Điều Hành</h2>
+            <span class="badge badge-info">OS Dock / Taskbar Preview</span>
+          </div>
+          <p class="panel-desc">
+            Hình ảnh mô phỏng trạng thái icon ứng dụng của bạn trông như thế nào trên thanh tác vụ của máy tính người dùng.
+          </p>
+
+          <div class="pwa-dock-simulator">
+            <div class="app-icon-wrap">
+              <div class="app-icon-inner">MDN</div>
+              <div id="simulated-badge-el" class="simulated-badge">3</div>
+            </div>
+            <div style="font-size: 0.82rem; color: var(--text-dim);">
+              Icon Ứng Dụng Web (PWA) trên Taskbar / Dock
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Workflow Log UI -->
+      <aside class="logger-card">
+        <div class="logger-header">
+          <div class="logger-title">
+            <span>⚡</span>
+            <span>Workflow Log UI</span>
+          </div>
+          <div class="logger-actions">
+            <button type="button" id="logger-copy" class="logger-btn">Sao chép</button>
+            <button type="button" id="logger-clear" class="logger-btn">Xoá</button>
+          </div>
+        </div>
+        <div id="logger-body" class="logger-body"></div>
+      </aside>
+    </div>
+  </main>
+
+  <script src="../shared/api-data.js"></script>
+  <script src="../shared/ui-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

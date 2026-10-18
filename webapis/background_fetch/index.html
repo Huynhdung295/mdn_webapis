@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Background Fetch API</title>
+  <link rel="stylesheet" href="../shared/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .progress-bar-wrap {
+      width: 100%;
+      height: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 5px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+      transition: width 0.15s;
+    }
+    .task-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <main class="app-container">
+    <div id="overview-container" class="overview-card"></div>
+
+    <div class="layout-grid">
+      <div class="test-section">
+
+        <!-- Panel 1: Service Worker -->
+        <div class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">1. Môi Trường Service Worker</h2>
+            <span class="badge badge-info">registration.backgroundFetch</span>
+          </div>
+          <p class="panel-desc">
+            Background Fetch bắt buộc chạy cùng Service Worker để tiếp tục tải khi trang bị đóng.
+          </p>
+
+          <div class="btn-group">
+            <button type="button" id="btn-register-sw" class="btn btn-primary">
+              Kích Hoạt Service Worker (sw.js)
+            </button>
+            <button type="button" id="btn-get-existing-tasks" class="btn btn-secondary">
+              Xem Tác Vụ Đang Chạy (getIds)
+            </button>
+          </div>
+
+          <div id="sw-status-box" class="preview-box" style="margin-top:10px;">
+            Trạng thái Service Worker: <strong>Đang kiểm tra...</strong>
+          </div>
+        </div>
+
+        <!-- Panel 2: Tải ngầm -->
+        <div class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">2. Khởi Chạy Tải Ngầm (backgroundFetch.fetch)</h2>
+            <span class="badge badge-success">fetch(id, urls, options)</span>
+          </div>
+          <p class="panel-desc">
+            Bàn giao tác vụ tải cho trình duyệt và hệ điều hành. Đóng tab lại tải vẫn tiếp tục.
+          </p>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Task ID:</label>
+              <input type="text" id="task-id-input" class="form-input" value="podcast-demo-01">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Tiêu đề thông báo OS:</label>
+              <input type="text" id="task-title-input" class="form-input" value="Tải Tài Nguyên Offline">
+            </div>
+          </div>
+
+          <div class="btn-group">
+            <button type="button" id="btn-start-bg-fetch" class="btn btn-primary">
+              Bắt Đầu Tải Ngầm
+            </button>
+            <button type="button" id="btn-abort-bg-fetch" class="btn btn-danger">
+              Huỷ Tác Vụ (Abort)
+            </button>
+          </div>
+
+          <div id="active-task-container" class="task-card" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <strong id="task-label-title" style="color: #fff; font-size: 0.9rem;">--</strong>
+                <div id="task-label-id" style="font-size: 0.72rem; color: var(--text-muted); font-family: var(--font-mono);">--</div>
+              </div>
+              <span id="task-status-badge" class="badge badge-info">Đang tải</span>
+            </div>
+
+            <div class="progress-bar-wrap">
+              <div id="progress-bar-fill" class="progress-bar-fill"></div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; margin-top: 4px; font-size: 0.75rem; color: var(--text-secondary);">
+              <span id="progress-bytes-label">0 KB / 0 KB</span>
+              <span id="progress-pct-label">0%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel 3: Cache Storage -->
+        <div class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">3. Kiểm Tra Cache Storage</h2>
+            <span class="badge badge-warning">caches.open(taskId)</span>
+          </div>
+          <p class="panel-desc">
+            Khi Service Worker tải xong, phản hồi được tự động nạp vào Cache Storage theo Task ID.
+          </p>
+
+          <div class="btn-group">
+            <button type="button" id="btn-inspect-cache" class="btn btn-secondary">
+              Xem File Trong Cache
+            </button>
+            <button type="button" id="btn-clear-cache" class="btn btn-danger">
+              Xoá Cache Tác Vụ
+            </button>
+          </div>
+
+          <div id="cached-files-list" class="preview-box" style="margin-top:10px; font-family: var(--font-mono); font-size: 0.8rem;">
+            Chưa kiểm tra cache.
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Workflow Log UI -->
+      <aside class="logger-card">
+        <div class="logger-header">
+          <div class="logger-title">
+            <span>⚡</span>
+            <span>Workflow Log UI</span>
+          </div>
+          <div class="logger-actions">
+            <button type="button" id="logger-copy" class="logger-btn">Sao chép</button>
+            <button type="button" id="logger-clear" class="logger-btn">Xoá</button>
+          </div>
+        </div>
+        <div id="logger-body" class="logger-body"></div>
+      </aside>
+    </div>
+  </main>
+
+  <script src="../shared/api-data.js"></script>
+  <script src="../shared/ui-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Background Synchronization API</title>
+  <link rel="stylesheet" href="../shared/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .message-queue-box {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-sm);
+      padding: 10px;
+      max-height: 180px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .queue-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 7px 10px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 4px;
+      font-size: 0.82rem;
+    }
+  </style>
+</head>
+<body>
+
+  <main class="app-container">
+    <div id="overview-container" class="overview-card"></div>
+
+    <div class="layout-grid">
+      <div class="test-section">
+
+        <!-- Panel 1: Service Worker & SyncManager -->
+        <div class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">1. Môi Trường Service Worker & SyncManager</h2>
+            <span class="badge badge-info">registration.sync</span>
+          </div>
+          <p class="panel-desc">
+            Sự kiện <code>sync</code> được kích hoạt trong Service Worker ngầm khi kết nối internet được đảm bảo.
+          </p>
+
+          <div class="btn-group">
+            <button type="button" id="btn-register-sync-sw" class="btn btn-primary">
+              Kích Hoạt Service Worker (sw.js)
+            </button>
+            <button type="button" id="btn-query-tags" class="btn btn-secondary">
+              Xem Thẻ Đang Chờ (getTags)
+            </button>
+          </div>
+
+          <div id="sync-sw-status" class="preview-box" style="margin-top:10px;">
+            Trạng thái Service Worker: <strong>Đang kiểm tra...</strong>
+          </div>
+        </div>
+
+        <!-- Panel 2: Đăng ký Sync Tag & Giả lập Offline -->
+        <div class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">2. Đăng Ký Thẻ Đồng Bộ (sync.register)</h2>
+            <span class="badge badge-success">sync.register(tag)</span>
+          </div>
+          <p class="panel-desc">
+            Nếu thiết bị offline, trình duyệt lưu tag vào hàng đợi và tự động bắn sự kiện đồng bộ ngay khi online trở lại.
+          </p>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Tên thẻ đồng bộ (Sync Tag):</label>
+              <input type="text" id="sync-tag-input" class="form-input" value="sync-outbox-messages">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Trạng thái mạng máy tính:</label>
+              <div id="network-status-chip" style="padding: 7px 10px; border-radius: var(--radius-sm); font-weight: 600; font-size: 0.85rem; background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3);">
+                🟢 Online (Đang có mạng)
+              </div>
+            </div>
+          </div>
+
+          <div class="btn-group">
+            <button type="button" id="btn-register-tag" class="btn btn-primary">
+              Đăng Ký Tag Đồng Bộ
+            </button>
+            <button type="button" id="btn-simulate-offline-msg" class="btn btn-secondary">
+              Giả Lập Tạo Tin Nhắn Đợi Gửi
+            </button>
+          </div>
+
+          <div style="margin-top: 12px;">
+            <div class="form-label">Hàng đợi tin nhắn gửi đi (Outbox Queue):</div>
+            <div id="outbox-queue-container" class="message-queue-box">
+              <span style="color: var(--text-muted); font-size: 0.8rem;">Chưa có tin nhắn trong hàng đợi.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Workflow Log UI -->
+      <aside class="logger-card">
+        <div class="logger-header">
+          <div class="logger-title">
+            <span>⚡</span>
+            <span>Workflow Log UI</span>
+          </div>
+          <div class="logger-actions">
+            <button type="button" id="logger-copy" class="logger-btn">Sao chép</button>
+            <button type="button" id="logger-clear" class="logger-btn">Xoá</button>
+          </div>
+        </div>
+        <div id="logger-body" class="logger-body"></div>
+      </aside>
+    </div>
+  </main>
+
+  <script src="../shared/api-data.js"></script>
+  <script src="../shared/ui-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
