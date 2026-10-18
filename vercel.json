@@ -1,15 +1,6 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "server.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "server.js"
-    }
+  "cleanUrls": false,
+  "redirects": [
+    { "source": "/", "destination": "/client/index.html", "permanent": false }
   ]
 }
