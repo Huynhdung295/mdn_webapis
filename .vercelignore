@@ -1,4 +1,6 @@
 # Vercel Ignore
-# Bỏ qua tệp và thư mục kiểm thử
+# Bỏ qua tệp phát triển cục bộ và kiểm thử
+dev-server.js
+server.js
 test/
 vitest.config.mjs

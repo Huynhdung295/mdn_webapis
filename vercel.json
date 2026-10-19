@@ -1,12 +1,9 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "",
+  "outputDirectory": ".",
   "cleanUrls": false,
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/server.js" }
-  ],
-  "functions": {
-    "server.js": {
-      "includeFiles": "{client/**,webapis/**,favicon.*,index.html}"
-    }
-  }
+  "redirects": [
+    { "source": "/", "destination": "/client/index.html", "permanent": false }
+  ]
 }

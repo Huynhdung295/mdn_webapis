@@ -5,10 +5,9 @@
   "license": "ISC",
   "author": "",
   "type": "commonjs",
-  "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js",
+    "start": "node dev-server.js",
+    "dev": "node dev-server.js",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:summary": "node test/test-all-apis.js",
