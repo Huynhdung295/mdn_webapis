@@ -1,0 +1,8 @@
+# Vercel Ignore
+# Bỏ qua server.js để Vercel không tự động triển khai dạng Node.js Serverless Function monolithic,
+# mà phục vụ toàn bộ giao diện tĩnh (HTML/CSS/JS) qua Edge CDN và các API endpoints trong /api/.
+server.js
+
+# Bỏ qua môi trường test
+test/
+vitest.config.mjs

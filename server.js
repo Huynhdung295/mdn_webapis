@@ -124,9 +124,7 @@ const server = http.createServer((req, res) => {
         res.end(`404 Not Found: ${reqUrl}`);
         return;
       }
-    }
-
-    if (stats.isDirectory()) {
+    } else if (stats && stats.isDirectory()) {
       filePath = path.join(filePath, 'index.html');
     }
 
