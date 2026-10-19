@@ -6,13 +6,7 @@
   ],
   "functions": {
     "server.js": {
-      "includeFiles": [
-        "client/**",
-        "webapis/**",
-        "favicon.ico",
-        "favicon.svg",
-        "index.html"
-      ]
+      "includeFiles": "{client/**,webapis/**,favicon.*,index.html}"
     }
   }
 }
