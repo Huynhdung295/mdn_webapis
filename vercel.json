@@ -1,16 +1,18 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": false,
-  "redirects": [
-    { "source": "/", "destination": "/client/index.html", "permanent": false }
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/server.js" }
   ],
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        { "key": "Access-Control-Allow-Origin", "value": "*" },
-        { "key": "Access-Control-Allow-Methods", "value": "GET, POST, PUT, DELETE, OPTIONS" },
-        { "key": "Access-Control-Allow-Headers", "value": "Content-Type, Authorization" }
+  "functions": {
+    "server.js": {
+      "includeFiles": [
+        "client/**",
+        "webapis/**",
+        "favicon.ico",
+        "favicon.svg",
+        "index.html"
       ]
     }
-  ]
+  }
 }

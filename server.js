@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 
 const PORT = process.env.PORT || 3000;
-const ROOT = __dirname;
+const ROOT = process.env.VERCEL ? process.cwd() : __dirname;
 
 const MIME_TYPES = {
   '.html': 'text/html; charset=utf-8',
